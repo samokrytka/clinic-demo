@@ -1,0 +1,2852 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f4fbfd" />
+    <title>Zub Clinic — стоматология</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+      :root {
+        --bg: #0b1113;
+        --surface: #182225;
+        --surface-blue: #153e4d;
+        --surface-mint: #103f36;
+        --line: #2b3b3e;
+        --text: #f7f5ef;
+        --muted: #99aaa9;
+        --blue: #20b9ee;
+        --blue-dark: #087db3;
+        --mint: #00d884;
+        --shadow: none;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        position: relative;
+        min-height: 100vh;
+        margin: 0;
+        background: #0b1113;
+        color: var(--text);
+        font:
+          16px/1.45 "Manrope",
+          system-ui,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        z-index: 0;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          rgba(7, 12, 14, 0.78) 0%,
+          rgba(7, 12, 14, 0.9) 45%,
+          rgba(7, 12, 14, 0.97) 100%
+        );
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+      }
+      button:focus-visible {
+        outline: 3px solid #8bdcf5;
+        outline-offset: 3px;
+      }
+      .app {
+        position: relative;
+        z-index: 1;
+        max-width: 560px;
+        margin: 0 auto;
+        padding: 22px 20px 112px;
+      }
+      .screen {
+        display: none;
+      }
+      .screen.is-active {
+        display: block;
+        animation: screen-in 0.2s ease-out;
+      }
+      @keyframes screen-in {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 26px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 39px;
+        height: 39px;
+        border: 1px solid #254951;
+        border-radius: 50%;
+        background: #10191c;
+        color: var(--blue);
+      }
+      .brand-mark svg {
+        width: 25px;
+        height: 25px;
+      }
+      .brand-name {
+        font-family: "Manrope", sans-serif;
+        font-size: 18px;
+        letter-spacing: -0.05em;
+      }
+      .brand-note {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 10px;
+        border-left: 2px solid var(--mint);
+        border-radius: 10px;
+        background: transparent;
+        color: var(--mint);
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .status i {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--mint);
+      }
+      .status.closed i {
+        background: #e47782;
+      }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 320px;
+        padding: 34px 28px 28px;
+        border: 1px solid #39727c;
+        border-radius: 25px;
+        background: linear-gradient(
+          145deg,
+          rgba(17, 38, 44, 0.82) 0%,
+          rgba(15, 23, 26, 0.58) 70%
+        );
+      }
+      .eyebrow {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 9px;
+        color: var(--blue-dark);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      h1 {
+        position: relative;
+        z-index: 1;
+        max-width: 430px;
+        margin: 0;
+        font:
+          800 clamp(38px, 9vw, 62px)/0.95 "Manrope",
+          sans-serif;
+        letter-spacing: -0.08em;
+      }
+      .hero p {
+        position: relative;
+        z-index: 1;
+        max-width: 300px;
+        margin: 14px 0 20px;
+        color: #a7b7b6;
+        font-size: 16px;
+      }
+      .primary {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 52px;
+        padding: 12px 22px;
+        border: 0;
+        border-radius: 14px;
+        background: var(--mint);
+        color: #041711;
+        font-weight: 800;
+        transition:
+          transform 0.18s,
+          background 0.18s;
+      }
+      .primary:active {
+        transform: translateY(5px);
+        box-shadow: none;
+      }
+      .hero-art {
+        position: absolute;
+        z-index: 1;
+        right: 22px;
+        bottom: 22px;
+        color: rgba(255, 255, 255, 0.78);
+      }
+      .hero-art svg {
+        width: 86px;
+        height: 86px;
+      }
+      .visual-menu {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 22px;
+      }
+      .visual-card {
+        position: relative;
+        min-height: 174px;
+        overflow: hidden;
+        padding: 17px;
+        border: 0;
+        border-radius: 27px;
+        text-align: center;
+        isolation: isolate;
+      }
+      .visual-card::after {
+        content: "";
+        position: absolute;
+        inset: auto -30px -40px auto;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        z-index: -1;
+      }
+      .visual-card--blue {
+        background: #1879d0;
+      }
+      .visual-card--violet {
+        min-height: 360px;
+        grid-row: span 2;
+        background: #bd58d8;
+      }
+      .visual-card--orange {
+        background: #ffaf13;
+      }
+      .visual-card span {
+        position: relative;
+        z-index: 2;
+        display: block;
+        width: 100%;
+        color: #fff;
+        font:
+          800 24px/0.95 "Manrope",
+          sans-serif;
+        letter-spacing: -0.07em;
+      }
+      .visual-card small {
+        position: relative;
+        z-index: 2;
+        display: block;
+        width: 100%;
+        margin-top: 7px;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .visual-card img {
+        position: absolute;
+        right: -8px;
+        bottom: -14px;
+        z-index: 1;
+        width: 74%;
+        height: 72%;
+        object-fit: contain;
+        mix-blend-mode: multiply;
+      }
+      .visual-card--violet img {
+        right: -22px;
+        bottom: -8px;
+        width: 116%;
+        height: 75%;
+      }
+      .visual-card--orange img {
+        right: -25px;
+        bottom: -28px;
+        width: 105%;
+        height: 84%;
+      }
+      .section {
+        margin-top: 30px;
+      }
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      h2 {
+        margin: 0;
+        font:
+          800 25px/1 "Manrope",
+          sans-serif;
+        letter-spacing: -0.07em;
+      }
+      .section-head span {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .services {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 11px;
+      }
+      .service {
+        display: flex;
+        min-height: 156px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(24, 34, 37, 0.88);
+        text-align: left;
+        transition:
+          transform 0.18s,
+          border-color 0.18s;
+      }
+      .service:active {
+        transform: translateY(2px);
+        border-color: var(--blue-dark);
+      }
+      .service:disabled {
+        cursor: wait;
+        opacity: 0.55;
+      }
+      .service-icon {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        margin-bottom: 16px;
+        border: 1px solid #2f6471;
+        border-radius: 13px;
+        background: rgba(32, 185, 238, 0.1);
+        color: var(--blue);
+      }
+      .service:nth-child(2) .service-icon {
+        background: #e5f8f2;
+        color: #2c9b83;
+      }
+      .service:nth-child(3) .service-icon {
+        background: #fff2dd;
+        color: #db9a44;
+      }
+      .service:nth-child(4) .service-icon {
+        background: #f1eaff;
+        color: #8664bd;
+      }
+      .service-icon svg {
+        width: 23px;
+        height: 23px;
+      }
+      .service-title {
+        font-size: 16px;
+        font-weight: 800;
+      }
+      .service-note {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .service-price {
+        margin-top: auto;
+        padding-top: 12px;
+        color: var(--blue-dark);
+        font-size: 14px;
+        font-weight: 800;
+      }
+      .booking-panel {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(24, 34, 37, 0.92);
+      }
+      .booking-label {
+        display: block;
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .choice-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .choice {
+        min-height: 47px;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #121b1e;
+        color: var(--text);
+        text-align: left;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .choice small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .choice em {
+        display: inline-block;
+        margin-top: 5px;
+        padding: 2px 7px;
+        border-radius: 99px;
+        background: var(--surface-mint);
+        color: #268b74;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 800;
+      }
+      .doctor-info {
+        margin: -8px 0 20px;
+        padding: 14px;
+        border-radius: 16px;
+        background: var(--surface-blue);
+        color: var(--text);
+      }
+      .doctor-info strong {
+        display: block;
+        font-size: 14px;
+      }
+      .doctor-info p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .doctor-info details {
+        margin-top: 9px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+      .doctor-info summary {
+        color: var(--blue-dark);
+        font-size: 12px;
+      }
+      .doctor-info summary::after {
+        font-size: 17px;
+      }
+      .doctor-info details p {
+        margin-top: 6px;
+      }
+      .choice[aria-pressed="true"] {
+        border-color: var(--blue);
+        background: var(--surface-blue);
+        color: var(--blue-dark);
+      }
+      .date-grid {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+        scrollbar-width: none;
+      }
+      .date-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .date-choice {
+        flex: 0 0 72px;
+        padding: 10px 6px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #121b1e;
+        color: var(--text);
+        text-align: center;
+      }
+      .date-choice b {
+        display: block;
+        font-size: 13px;
+      }
+      .date-choice span {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .date-choice[aria-pressed="true"] {
+        border-color: var(--blue);
+        background: var(--surface-blue);
+        color: var(--blue-dark);
+      }
+      .time-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .time-choice {
+        padding: 11px 4px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: #121b1e;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .time-choice[aria-pressed="true"] {
+        border-color: var(--blue);
+        background: var(--blue-dark);
+        color: #fff;
+      }
+      .booking-note {
+        min-height: 20px;
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .booking-confirm {
+        width: 100%;
+        border: 0;
+        border-radius: 15px;
+        padding: 14px;
+        background: var(--blue-dark);
+        color: #fff;
+        font-weight: 800;
+      }
+      .booking-confirm:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+      }
+      .reschedule-modal[hidden] {
+        display: none;
+      }
+      .reschedule-modal {
+        position: fixed;
+        z-index: 20;
+        inset: 0;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        padding: 24px 16px calc(env(safe-area-inset-bottom, 0px) + 90px);
+        background: rgba(3, 8, 10, 0.78);
+        backdrop-filter: blur(8px);
+      }
+      .reschedule-dialog {
+        width: min(100%, 520px);
+        max-height: calc(100vh - 140px);
+        max-height: calc(100dvh - 140px);
+        overflow: auto;
+        padding: 21px;
+        border: 1px solid #39616a;
+        border-radius: 24px;
+        background: #172327;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      }
+      .reschedule-head {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .reschedule-head h3 {
+        margin: 0;
+        font-size: 21px;
+        letter-spacing: -0.05em;
+      }
+      .reschedule-head p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .reschedule-close {
+        display: grid;
+        flex: 0 0 34px;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: #10191c;
+        color: var(--muted);
+        font-size: 20px;
+      }
+      .reschedule-label {
+        display: block;
+        margin: 16px 0 9px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+      }
+      .reschedule-date-grid {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+      .reschedule-date-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .reschedule-date-grid .date-choice {
+        flex-basis: 78px;
+      }
+      .reschedule-time-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .reschedule-actions {
+        position: sticky;
+        bottom: -21px;
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 8px;
+        margin: 18px -1px -21px;
+        padding: 12px 1px 21px;
+        background: #172327;
+      }
+      .reschedule-actions button {
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: #10191c;
+        color: var(--muted);
+        font-weight: 800;
+      }
+      .reschedule-actions button:last-child {
+        border-color: var(--blue-dark);
+        background: var(--blue-dark);
+        color: #fff;
+      }
+      .reschedule-actions button:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+      }
+      .demo-badge {
+        display: inline-flex;
+        margin-bottom: 12px;
+        padding: 5px 9px;
+        border-radius: 99px;
+        background: #fff2dd;
+        color: #b67826;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .appointment-list {
+        display: grid;
+        gap: 10px;
+      }
+      .appointment {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(24, 34, 37, 0.92);
+      }
+      .appointment strong {
+        display: block;
+        font-size: 15px;
+      }
+      .appointment p {
+        margin: 4px 0 13px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .appointment-actions {
+        display: flex;
+        gap: 8px;
+      }
+      .appointment-actions button {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #121b1e;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+      }
+      .appointment-actions button:last-child {
+        color: #b36d76;
+      }
+      .empty-appointments {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(24, 34, 37, 0.88);
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .steps {
+        display: grid;
+        gap: 10px;
+      }
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 19px;
+        background: rgba(24, 34, 37, 0.88);
+      }
+      .step-number {
+        display: grid;
+        flex: 0 0 36px;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 13px;
+        background: var(--surface-blue);
+        color: var(--blue-dark);
+        font-weight: 800;
+      }
+      .step strong {
+        display: block;
+        font-size: 15px;
+      }
+      .step span {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .info-card {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 17px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(24, 34, 37, 0.88);
+      }
+      .info-icon {
+        display: grid;
+        flex: 0 0 44px;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 15px;
+        background: var(--surface-mint);
+        color: #2c9b83;
+      }
+      .info-icon svg {
+        width: 23px;
+        height: 23px;
+      }
+      .info-card strong {
+        display: block;
+        font-size: 15px;
+      }
+      .info-card span {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .faq {
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(24, 34, 37, 0.92);
+        overflow: hidden;
+      }
+      details {
+        padding: 16px 17px;
+        border-bottom: 1px solid var(--line);
+      }
+      details:last-child {
+        border-bottom: 0;
+      }
+      summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 800;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      summary::after {
+        content: "+";
+        float: right;
+        color: var(--blue-dark);
+        font-size: 21px;
+        font-weight: 500;
+        line-height: 18px;
+      }
+      details[open] summary::after {
+        content: "−";
+      }
+      details p {
+        margin: 9px 22px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      nav {
+        position: fixed;
+        z-index: 10;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 8px 12px calc(env(safe-area-inset-bottom, 0px) + 8px);
+        border-top: 1px solid #26373a;
+        background: rgba(11, 17, 19, 0.94);
+      }
+      nav .nav-inner {
+        display: flex;
+        max-width: 520px;
+        margin: 0 auto;
+        justify-content: space-around;
+      }
+      nav button {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        padding: 5px 0;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+      nav button[aria-current="page"] {
+        color: var(--blue-dark);
+      }
+      nav svg {
+        width: 23px;
+        height: 23px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
+      }
+      .icon {
+        width: 1em;
+        height: 1em;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+      }
+      @media (max-width: 360px) {
+        .hero-art {
+          opacity: 0.35;
+          right: 7px;
+        }
+        .hero {
+          padding-right: 18px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        html {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+
+      :root {
+        --bg: #0a0d0e;
+        --surface: #12191b;
+        --surface-blue: #102d39;
+        --surface-mint: #12392f;
+        --line: #2a393c;
+        --text: #f1eee7;
+        --muted: #8c9a9a;
+        --blue: #48c7ee;
+        --blue-dark: #159bc7;
+        --mint: #8fe3bf;
+      }
+      body {
+        background: var(--bg);
+        font-family: "DM Sans", system-ui, sans-serif;
+      }
+      body::before {
+        background:
+          radial-gradient(
+            circle at 85% 4%,
+            rgba(26, 114, 136, 0.18),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 10% 30%,
+            rgba(61, 117, 101, 0.1),
+            transparent 25%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(13, 25, 28, 0.36),
+            rgba(10, 13, 14, 0.92) 70%
+          );
+      }
+      .app {
+        max-width: 620px;
+        padding: 18px 22px 116px;
+      }
+      .topbar {
+        margin-bottom: 28px;
+        padding-bottom: 14px;
+        border-bottom-color: #34484b;
+      }
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border: 1px solid #396873;
+        border-radius: 12px;
+        background: #0d1719;
+      }
+      .brand-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 19px;
+        letter-spacing: -0.06em;
+      }
+      .brand-note {
+        letter-spacing: 0.12em;
+      }
+      .status {
+        border-left-color: var(--mint);
+        border-radius: 3px;
+        background: rgba(18, 57, 47, 0.55);
+        color: var(--mint);
+        letter-spacing: 0.01em;
+      }
+      .hero {
+        min-height: 348px;
+        padding: 32px 30px 30px;
+        border: 1px solid #365a62;
+        border-radius: 12px;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(21, 54, 63, 0.92),
+            rgba(15, 25, 27, 0.96) 72%
+          ),
+          var(--surface);
+      }
+      .eyebrow {
+        color: var(--blue);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+      }
+      h1,
+      h2,
+      .visual-card span,
+      .reschedule-head h3 {
+        font-family: "Space Grotesk", sans-serif;
+      }
+      h1 {
+        max-width: 480px;
+        font-size: clamp(40px, 9vw, 68px);
+        letter-spacing: -0.09em;
+      }
+      .hero p {
+        max-width: 340px;
+        color: #b5c3c1;
+      }
+      .primary {
+        min-height: 50px;
+        border-radius: 6px;
+        background: var(--mint);
+        color: #082019;
+      }
+      .hero-art {
+        right: 26px;
+        bottom: 24px;
+        color: rgba(143, 227, 191, 0.8);
+      }
+      .visual-menu {
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .visual-card {
+        min-height: 162px;
+        padding: 20px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+      }
+      .visual-card::after {
+        display: none;
+      }
+      .visual-card--blue {
+        background: #155f8a;
+      }
+      .visual-card--violet {
+        min-height: 334px;
+        background: #5c477b;
+      }
+      .visual-card--orange {
+        background: #ae6336;
+      }
+      .visual-card span {
+        max-width: 100%;
+        font-size: clamp(18px, 5.3vw, 25px);
+        line-height: 1;
+        letter-spacing: -0.08em;
+      }
+      .visual-card small {
+        max-width: 100%;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 10px;
+        letter-spacing: 0.02em;
+      }
+      .visual-card--violet span {
+        font-size: clamp(17px, 4.5vw, 22px);
+        white-space: nowrap;
+      }
+      .visual-card--orange img {
+        right: -30px;
+        bottom: -48px;
+        width: 138%;
+        height: 122%;
+        object-fit: cover;
+        object-position: 50% 45%;
+      }
+      .section {
+        margin-top: 26px;
+      }
+      .section-head {
+        align-items: baseline;
+        margin-bottom: 12px;
+      }
+      h2 {
+        font-size: 28px;
+        letter-spacing: -0.08em;
+      }
+      .section-head span {
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .services {
+        gap: 8px;
+      }
+      .service {
+        min-height: 148px;
+        padding: 15px;
+        border-radius: 10px;
+        background: rgba(18, 25, 27, 0.94);
+      }
+      .service-icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 13px;
+        border-radius: 9px;
+      }
+      .service-title {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.04em;
+      }
+      .service-price {
+        color: var(--mint);
+      }
+      .booking-panel,
+      .appointment,
+      .empty-appointments,
+      .info-card,
+      .faq,
+      .step {
+        border-radius: 10px;
+        background: rgba(18, 25, 27, 0.95);
+      }
+      .booking-panel {
+        padding: 18px;
+      }
+      .choice,
+      .date-choice,
+      .time-choice,
+      .appointment-actions button {
+        border-radius: 8px;
+        background: #0d1517;
+      }
+      .choice[aria-pressed="true"],
+      .date-choice[aria-pressed="true"] {
+        background: #123b4a;
+        color: var(--blue);
+      }
+      .doctor-info {
+        border-radius: 10px;
+        background: #12343f;
+      }
+      .booking-confirm,
+      .reschedule-actions button:last-child {
+        border-radius: 7px;
+        background: var(--blue-dark);
+      }
+      .reschedule-modal {
+        background: rgba(3, 8, 10, 0.84);
+      }
+      .reschedule-dialog {
+        border-radius: 12px;
+        background: #151f21;
+      }
+      nav {
+        border-top-color: #314246;
+        background: rgba(10, 13, 14, 0.96);
+      }
+      nav button {
+        font-size: 10px;
+        letter-spacing: -0.01em;
+      }
+      nav button[aria-current="page"] {
+        color: var(--blue);
+      }
+
+      :root {
+        --bg: #f4fbfd;
+        --surface: #ffffff;
+        --surface-blue: #e1f4fa;
+        --surface-mint: #e5f7f3;
+        --line: #c9e2e9;
+        --text: #17313a;
+        --muted: #6d858d;
+        --blue: #168db6;
+        --blue-dark: #087b9f;
+        --mint: #b7eee0;
+        color-scheme: light;
+      }
+      body {
+        background: linear-gradient(
+          145deg,
+          #ffffff 0%,
+          #f5fcfe 48%,
+          #e9f7fb 100%
+        );
+        color: var(--text);
+      }
+      body::before {
+        background:
+          radial-gradient(
+            circle at 92% 5%,
+            rgba(174, 229, 240, 0.42),
+            transparent 27%
+          ),
+          radial-gradient(
+            circle at 4% 42%,
+            rgba(215, 246, 241, 0.6),
+            transparent 25%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.62),
+            rgba(229, 246, 251, 0.68)
+          );
+      }
+      .topbar {
+        border-bottom-color: var(--line);
+      }
+      .brand-mark {
+        border-color: #b6dce5;
+        background: #e5f8fb;
+        color: var(--blue-dark);
+      }
+      .brand-note,
+      .section-head span,
+      .hero p,
+      .section-head span {
+        color: var(--muted);
+      }
+      .status {
+        background: #e5f7f3;
+        color: #238c78;
+      }
+      .status.closed {
+        background: #fff0ef;
+        color: #c85c63;
+      }
+      .hero {
+        border-color: #b5dce5;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(226, 247, 251, 0.98),
+            rgba(255, 255, 255, 0.98) 74%
+          ),
+          var(--surface);
+        box-shadow: 0 14px 38px rgba(67, 135, 151, 0.11);
+      }
+      .eyebrow {
+        color: var(--blue-dark);
+      }
+      h1,
+      h2,
+      .reschedule-head h3 {
+        color: #15343d;
+      }
+      .hero p {
+        color: #5f7981;
+      }
+      .primary {
+        background: #9ee4d1;
+        color: #123a3b;
+        box-shadow: 0 8px 20px rgba(70, 160, 143, 0.16);
+      }
+      .hero-art {
+        color: rgba(34, 146, 166, 0.72);
+      }
+      .hero-proof {
+        max-width: none;
+      }
+      .hero-art {
+        right: 14px;
+        bottom: 14px;
+        opacity: 0.58;
+      }
+      .visual-card img,
+      .visual-card img {
+        display: block;
+      }
+      .hero-art {
+        display: none;
+      }
+      .visual-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .visual-card span,
+      .visual-card small {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: auto;
+        max-width: 100%;
+        letter-spacing: 0.015em;
+        text-align: center;
+      }
+      .visual-card span {
+        z-index: 3;
+      }
+      .visual-card small {
+        z-index: 3;
+        margin-top: 7px;
+      }
+      .visual-card img {
+        z-index: 1;
+        width: 82%;
+        height: 82%;
+        right: -8px;
+        bottom: -22px;
+        object-fit: contain;
+        opacity: 0.34;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+      .visual-card--violet img {
+        width: 88%;
+        height: 80%;
+        right: -10px;
+        bottom: -28px;
+      }
+      .visual-card--violet {
+        grid-row: auto;
+        min-height: 174px;
+      }
+      .visual-card--orange img {
+        width: 100%;
+        height: 86%;
+        right: -20px;
+        bottom: -24px;
+      }
+      .visual-card--orange span,
+      .visual-card--orange small {
+        align-self: center;
+        text-align: center;
+      }
+      .hero .primary {
+        margin-top: 12px;
+      }
+      .visual-card {
+        border-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 10px 24px rgba(55, 117, 132, 0.12);
+      }
+      .visual-card--blue {
+        background: #83c9df;
+      }
+      .visual-card--violet {
+        background: #c6b8dc;
+      }
+      .visual-card--orange {
+        background: #e5b18e;
+      }
+      .visual-card span {
+        color: #102f39;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28);
+      }
+      .visual-card small {
+        color: rgba(16, 47, 57, 0.86);
+        font-weight: 800;
+      }
+      .visual-card--violet span,
+      .visual-card--violet small {
+        color: #29203d;
+      }
+      .visual-card--violet span {
+        position: absolute;
+        top: 28px;
+        left: 14px;
+        width: calc(100% - 28px);
+      }
+      .visual-card--violet small {
+        position: absolute;
+        top: 62px;
+        left: 14px;
+        width: calc(100% - 28px);
+        margin-top: 0;
+      }
+      .visual-card--orange span,
+      .visual-card--orange small {
+        color: #4b2b20;
+      }
+      .visual-card--orange span {
+        position: absolute;
+        top: 20px;
+        left: 14px;
+        width: calc(100% - 28px);
+      }
+      .visual-card--orange small {
+        position: absolute;
+        top: 55px;
+        left: 14px;
+        width: calc(100% - 28px);
+        margin-top: 0;
+      }
+      .visual-card--orange img {
+        bottom: -62px;
+        height: 124%;
+      }
+      .why-zub {
+        display: grid;
+        gap: 10px;
+        margin-top: 22px;
+        padding: 20px;
+        border: 1px solid #c9e2e9;
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: 0 8px 22px rgba(63, 126, 141, 0.08);
+      }
+      .why-zub h2 {
+        font-size: 25px;
+      }
+      .why-zub-intro {
+        margin: 0 0 3px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .why-zub-item {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        gap: 10px;
+        align-items: start;
+        padding-top: 11px;
+        border-top: 1px solid #d8ebef;
+      }
+      .why-zub-item b {
+        display: block;
+        color: #173b45;
+        font-size: 14px;
+      }
+      .why-zub-item p {
+        margin: 3px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .why-zub-icon {
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #dff4f8;
+        color: var(--blue-dark);
+        font-weight: 800;
+      }
+      .hero-proof {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px 14px;
+        margin-top: 18px;
+        color: #52757d;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .hero-proof span::before {
+        content: "✓";
+        margin-right: 5px;
+        color: #168db6;
+        font-weight: 900;
+      }
+      .hero-compact {
+        min-height: 282px;
+        padding-top: 26px;
+        padding-bottom: 24px;
+      }
+      .hero-compact h1 {
+        max-width: 410px;
+        font-size: clamp(32px, 7.6vw, 54px);
+        letter-spacing: -0.075em;
+      }
+      .service,
+      .booking-panel,
+      .appointment,
+      .empty-appointments,
+      .info-card,
+      .faq,
+      .step {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 8px 22px rgba(63, 126, 141, 0.08);
+      }
+      .service-icon {
+        background: #dff4f8;
+        color: var(--blue-dark);
+      }
+      .service-price {
+        color: #138b80;
+      }
+      .choice,
+      .date-choice,
+      .time-choice,
+      .appointment-actions button {
+        border-color: #c9e2e9;
+        background: #f5fbfc;
+        color: var(--text);
+      }
+      .choice[aria-pressed="true"],
+      .date-choice[aria-pressed="true"],
+      .time-choice[aria-pressed="true"] {
+        border-color: #54b9d1;
+        background: #dff4f8;
+        color: #087b9f;
+      }
+      .doctor-info {
+        border-color: #b9e0e8;
+        background: #e7f7fa;
+      }
+      .booking-confirm,
+      .reschedule-actions button:last-child {
+        background: #229bb8;
+        color: white;
+      }
+      .reschedule-modal {
+        z-index: 100;
+        background: rgba(28, 77, 89, 0.22);
+      }
+      .reschedule-dialog {
+        border: 1px solid #b7dce4;
+        background: #ffffff;
+        box-shadow: 0 22px 60px rgba(35, 92, 105, 0.2);
+      }
+      .reschedule-actions {
+        background: #ffffff;
+        border-top: 1px solid #e0eef1;
+        box-shadow: 0 -8px 16px rgba(35, 92, 105, 0.06);
+      }
+      .confirm-modal[hidden] {
+        display: none;
+      }
+      .confirm-modal {
+        position: fixed;
+        z-index: 120;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background: rgba(28, 77, 89, 0.22);
+        backdrop-filter: blur(6px);
+      }
+      .confirm-dialog {
+        width: min(100%, 360px);
+        padding: 20px;
+        border: 1px solid #b7dce4;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 22px 60px rgba(35, 92, 105, 0.2);
+      }
+      .confirm-dialog h3 {
+        margin: 0;
+        color: #17343d;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 20px;
+      }
+      .confirm-dialog p {
+        margin: 8px 0 18px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .confirm-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .confirm-actions button {
+        min-height: 44px;
+        border: 1px solid #c9e2e9;
+        border-radius: 9px;
+        background: #f5fbfc;
+        color: #52757d;
+        font-weight: 800;
+      }
+      .confirm-actions button:last-child {
+        border-color: #229bb8;
+        background: #229bb8;
+        color: #fff;
+      }
+      nav {
+        border-top-color: #c6e0e7;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 -8px 24px rgba(61, 123, 137, 0.1);
+      }
+      nav button {
+        color: #779098;
+      }
+      nav button[aria-current="page"] {
+        color: #168db6;
+      }
+      .doctor-filters {
+        display: flex;
+        gap: 7px;
+        overflow-x: auto;
+        margin: -4px 0 12px;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+      .doctor-filters::-webkit-scrollbar {
+        display: none;
+      }
+      .doctor-filter {
+        flex: 0 0 auto;
+        padding: 8px 11px;
+        border: 1px solid #c9e2e9;
+        border-radius: 999px;
+        background: #f5fbfc;
+        color: #6d858d;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .doctor-filter[aria-pressed="true"] {
+        border-color: #54b9d1;
+        background: #dff4f8;
+        color: #087b9f;
+      }
+      .appointment-actions {
+        position: relative;
+        z-index: 12;
+      }
+      .appointment-actions button {
+        position: relative;
+        z-index: 13;
+        pointer-events: auto;
+      }
+      .help-chat {
+        padding: 16px;
+        border: 1px solid #c9e2e9;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 8px 22px rgba(63, 126, 141, 0.08);
+      }
+      .help-chat-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .help-chat-head strong {
+        display: block;
+        color: #173b45;
+      }
+      .help-chat-head span {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .chat-avatar {
+        display: grid;
+        place-items: center;
+        flex: 0 0 38px;
+        width: 38px;
+        height: 38px;
+        margin: 0 !important;
+        border-radius: 50%;
+        background: #dff4f8;
+        color: #087b9f;
+        font-size: 0;
+        font-weight: 900;
+      }
+      .chat-avatar svg {
+        width: 26px;
+        height: 26px;
+        display: block;
+        position: relative;
+        left: 0;
+        margin: 0 auto;
+        transform: translateY(1px);
+        fill: currentColor;
+        stroke: none;
+      }
+      .chat-avatar {
+        display: grid;
+        place-items: center;
+        justify-content: center;
+        align-content: center;
+        line-height: 0;
+        overflow: hidden;
+      }
+      .info-icon {
+        display: grid;
+        place-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+        border: 1px solid #b7dfe8;
+        border-radius: 50%;
+        background: #dff4f8;
+        color: #168db6;
+      }
+      .info-icon svg {
+        width: 23px;
+        height: 23px;
+        display: block;
+        position: relative;
+        left: 0;
+        margin: 0 auto;
+        transform: translateY(1px);
+        stroke-width: 1.6;
+      }
+      .visual-card--orange span {
+        position: absolute;
+        z-index: 4;
+        top: 20px;
+        left: 50%;
+        width: 100%;
+        transform: translateX(-50%);
+        color: #4b2b20;
+        text-align: center;
+        visibility: visible;
+      }
+      .visual-card-copy {
+        position: absolute;
+        z-index: 5;
+        inset: 0;
+        display: grid;
+        place-content: center;
+        justify-items: center;
+        gap: 7px;
+        padding: 18px;
+        text-align: center;
+        pointer-events: none;
+      }
+      .visual-card-copy span,
+      .visual-card-copy small,
+      .visual-card--orange span,
+      .visual-card--orange small,
+      .visual-card--violet span,
+      .visual-card--violet small {
+        position: static;
+        inset: auto;
+        width: auto;
+        max-width: 100%;
+        margin: 0;
+        transform: none;
+        text-align: center;
+      }
+      body,
+      button,
+      input,
+      textarea,
+      h1,
+      h2,
+      h3,
+      p,
+      span,
+      small,
+      strong,
+      label,
+      summary {
+        letter-spacing: 0 !important;
+      }
+      .visual-card--orange small {
+        position: absolute;
+        z-index: 4;
+        top: 55px;
+        left: 50%;
+        width: 100%;
+        transform: translateX(-50%);
+        margin-top: 0;
+        color: #4b2b20;
+        text-align: center;
+        visibility: visible;
+      }
+      .chat-messages {
+        display: grid;
+        gap: 7px;
+        max-height: 190px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+      }
+      .chat-message {
+        max-width: 88%;
+        padding: 9px 11px;
+        border-radius: 12px;
+        background: #e7f7fa;
+        color: #315963;
+        font-size: 12px;
+      }
+      .chat-message.is-user {
+        justify-self: end;
+        background: #dff4f8;
+        color: #176a82;
+      }
+      .chat-form {
+        display: flex;
+        gap: 7px;
+      }
+      .chat-form input {
+        min-width: 0;
+        flex: 1;
+        padding: 10px 11px;
+        border: 1px solid #c9e2e9;
+        border-radius: 9px;
+        background: #f8fdfe;
+        color: var(--text);
+        font: inherit;
+        font-size: 12px;
+      }
+      .chat-form button {
+        padding: 10px 12px;
+        border: 0;
+        border-radius: 9px;
+        background: #229bb8;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"
+            ><svg class="icon" viewBox="0 0 24 24">
+              <path
+                d="M7.8 4.8c1.5-1.4 2.5.2 4.2.2s2.7-1.6 4.2-.2c2.5 2.2 2.2 5.4 1.5 8.1-.7 2.7-1.6 6.1-3.2 6.1-1.5 0-1.1-3.4-2.5-3.4s-1 3.4-2.5 3.4c-1.6 0-2.5-3.4-3.2-6.1-.7-2.7-1-5.9 1.5-8.1Z"
+              />
+              <path
+                d="M9.2 3.8C9.6 2.7 10.5 2 12 2s2.4.7 2.8 1.8"
+              /></svg></span
+          ><span
+            ><span class="brand-name">Zub Clinic</span
+            ><span class="brand-note">стоматология рядом</span></span
+          >
+        </div>
+        <span class="status" id="clinic-status"
+          ><i></i><span>Проверяем график…</span></span
+        >
+      </header>
+      <div class="screen is-active" id="screen-home">
+        <section id="home">
+          <div class="hero hero-compact">
+            <p class="eyebrow">ZUB / DENTAL CLUB</p>
+            <h1>Здоровая улыбка начинается здесь</h1>
+            <p>
+              Услуги, врачи и расписание в одном месте. Выберите подходящую
+              помощь и запишитесь без звонков.
+            </p>
+            <div class="hero-proof" aria-label="Преимущества клиники">
+              <span>Профессионалы с опытом</span>
+              <span>Понятные услуги</span>
+              <span>Онлайн-запись</span>
+            </div>
+            <button class="primary" data-action="book">
+              Записаться
+              <svg class="icon" viewBox="0 0 24 24">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg></button
+            ><span class="hero-art" aria-hidden="true"
+              ><svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M7.8 4.8c1.5-1.4 2.5.2 4.2.2s2.7-1.6 4.2-.2c2.5 2.2 2.2 5.4 1.5 8.1-.7 2.7-1.6 6.1-3.2 6.1-1.5 0-1.1-3.4-2.5-3.4s-1 3.4-2.5 3.4c-1.6 0-2.5-3.4-3.2-6.1-.7-2.7-1-5.9 1.5-8.1Z"
+                />
+                <path d="M9.2 3.8C9.6 2.7 10.5 2 12 2s2.4.7 2.8 1.8" /></svg
+            ></span>
+          </div>
+          <div class="visual-menu">
+            <button
+              class="visual-card visual-card--blue"
+              data-scroll="services"
+            >
+              <span class="visual-card-copy"
+                ><span>УСЛУГИ</span><small>выбрать направление</small></span
+              ><img
+                src="assets/tooth-care.jpg"
+                alt="Стоматологическая процедура"
+              /></button
+            ><button
+              class="visual-card visual-card--violet"
+              data-scroll="booking"
+            >
+              <span class="visual-card-copy"
+                ><span>ЗАПИСАТЬСЯ</span
+                ><small>выбрать своего врача</small></span
+              ><img
+                src="assets/toothpaste.jpg"
+                alt="Средство для ухода за зубами"
+              /></button
+            ><button
+              class="visual-card visual-card--orange"
+              data-scroll="booking"
+            >
+              <span class="visual-card-copy"
+                ><span>ВРАЧИ</span><small>специалисты Zub</small></span
+              >
+              <img
+                src="assets/dental-tools.jpg"
+                alt="Стоматологические инструменты"
+              />
+            </button>
+          </div>
+        </section>
+      </div>
+      <div class="screen" id="screen-services">
+        <section class="section" id="services">
+          <div class="section-head">
+            <h2>Выберите заботу</h2>
+            <span>пн–сб · 10:00–19:00</span>
+          </div>
+          <p id="services-status" class="booking-note" role="status" hidden></p>
+          <div class="services">
+            <button class="service" data-service="consult">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <path d="M12 3v18M3 12h18" />
+                  <circle cx="12" cy="12" r="8.5" /></svg></span
+              ><span class="service-title">Консультация</span
+              ><span class="service-note">первичный осмотр</span
+              ><span class="service-price">от 1 000 ₽</span>
+            </button>
+            <button class="service" data-service="clean">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <path d="m5 14 2-8 3 5 2-7 2 7 3-5 2 8" />
+                  <path d="M5 14c0 4 3.1 7 7 7s7-3 7-7" /></svg></span
+              ><span class="service-title">Чистка</span
+              ><span class="service-note">свежесть и блеск</span
+              ><span class="service-price">от 4 500 ₽</span>
+            </button>
+            <button class="service" data-service="caries">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="M7.8 4.8c1.5-1.4 2.5.2 4.2.2s2.7-1.6 4.2-.2c2.5 2.2 2.2 5.4 1.5 8.1-.7 2.7-1.6 6.1-3.2 6.1-1.5 0-1.1-3.4-2.5-3.4s-1 3.4-2.5 3.4c-1.6 0-2.5-3.4-3.2-6.1-.7-2.7-1-5.9 1.5-8.1Z"
+                  /></svg></span
+              ><span class="service-title">Лечение</span
+              ><span class="service-note">бережно и спокойно</span
+              ><span class="service-price">от 6 000 ₽</span>
+            </button>
+            <button class="service" data-service="consult">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <path d="M4 12h16M12 4v16" />
+                  <circle cx="12" cy="12" r="8.5" /></svg></span
+              ><span class="service-title">Другой вопрос</span
+              ><span class="service-note">подберём лечение</span
+              ><span class="service-price">через консультацию</span>
+            </button>
+            <button class="service" data-service="orthodontics">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <path d="M5 7h14M5 12h14M5 17h14" />
+                  <circle cx="8" cy="7" r="1.5" />
+                  <circle cx="16" cy="17" r="1.5" /></svg></span
+              ><span class="service-title">Ортодонтия</span
+              ><span class="service-note">прикус и брекеты</span
+              ><span class="service-price">от 3 000 ₽</span>
+            </button>
+            <button class="service" data-service="implantation">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <path d="M7 4v16M17 4v16M5 8h14M5 16h14" /></svg></span
+              ><span class="service-title">Имплантация</span
+              ><span class="service-note">план лечения</span
+              ><span class="service-price">от 20 000 ₽</span>
+            </button>
+            <button class="service" data-service="pediatric">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8.5" />
+                  <path
+                    d="M8 14c1.1 1.2 2.4 1.8 4 1.8s2.9-.6 4-1.8M9 9h.01M15 9h.01"
+                  /></svg></span
+              ><span class="service-title">Детская стоматология</span
+              ><span class="service-note">бережная адаптация</span
+              ><span class="service-price">от 1 500 ₽</span>
+            </button>
+            <button class="service" data-service="whitening">
+              <span class="service-icon"
+                ><svg class="icon" viewBox="0 0 24 24">
+                  <path
+                    d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7Z"
+                  />
+                  <path
+                    d="m18 16 .7 2.3L21 19l-2.3.7L18 22l-.7-2.3L15 19l2.3-.7Z"
+                  /></svg></span
+              ><span class="service-title">Отбеливание</span
+              ><span class="service-note">сияние улыбки</span
+              ><span class="service-price">от 8 000 ₽</span>
+            </button>
+          </div>
+        </section>
+      </div>
+      <div class="screen" id="screen-booking">
+        <section class="section" id="booking">
+          <div class="section-head">
+            <h2>Запись онлайн</h2>
+            <span>демо-режим</span>
+          </div>
+          <div class="booking-panel">
+            <span class="demo-badge">Пока пример интерфейса</span
+            ><label class="booking-label">1. Врач</label>
+            <div
+              class="doctor-filters"
+              id="doctor-filters"
+              aria-label="Фильтр по специальности"
+            >
+              <button
+                class="doctor-filter"
+                data-category="all"
+                aria-pressed="true"
+              >
+                Все
+              </button>
+              <button
+                class="doctor-filter"
+                data-category="therapist"
+                aria-pressed="false"
+              >
+                Терапевты
+              </button>
+              <button
+                class="doctor-filter"
+                data-category="orthodontist"
+                aria-pressed="false"
+              >
+                Ортодонты
+              </button>
+              <button
+                class="doctor-filter"
+                data-category="surgeon"
+                aria-pressed="false"
+              >
+                Хирурги
+              </button>
+              <button
+                class="doctor-filter"
+                data-category="pediatric"
+                aria-pressed="false"
+              >
+                Детские
+              </button>
+            </div>
+            <div class="choice-grid" id="doctor-list"></div>
+            <div id="doctor-info"></div>
+            <label class="booking-label">2. День</label>
+            <div class="date-grid" id="date-list"></div>
+            <label class="booking-label">3. Время</label>
+            <div class="time-grid" id="time-list"></div>
+            <p class="booking-note" id="booking-note">
+              Выберите врача и время приёма.
+            </p>
+            <button class="booking-confirm" id="confirm-booking" disabled>
+              Подтвердить запись
+            </button>
+          </div>
+        </section>
+      </div>
+      <div class="screen" id="screen-appointments">
+        <section class="section" id="appointments">
+          <div class="section-head">
+            <h2>Мои записи</h2>
+            <span>можно перенести</span>
+          </div>
+          <div class="appointment-list" id="appointment-list"></div>
+        </section>
+      </div>
+      <div class="screen" id="screen-help">
+        <section class="section" id="how">
+          <div class="section-head"><h2>Как всё проходит</h2></div>
+          <div class="steps">
+            <div class="step">
+              <b class="step-number">01</b
+              ><span
+                ><strong>Выберите услугу</strong
+                ><span>Расскажем, что подойдёт именно вам</span></span
+              >
+            </div>
+            <div class="step">
+              <b class="step-number">02</b
+              ><span
+                ><strong>Найдите удобное окно</strong
+                ><span>Покажем только свободные слоты</span></span
+              >
+            </div>
+            <div class="step">
+              <b class="step-number">03</b
+              ><span
+                ><strong>Получите напоминание</strong
+                ><span>За день и за два часа до визита</span></span
+              >
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="info-card">
+            <span class="info-icon"
+              ><svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" /></svg></span
+            ><span
+              ><strong>Мы рядом с вами</strong
+              ><span
+                >Москва · работаем каждый день кроме воскресенья</span
+              ></span
+            >
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <h2>Написать нам</h2>
+            <span>ответим в рабочее время</span>
+          </div>
+          <div class="help-chat">
+            <div class="help-chat-head">
+              <span class="chat-avatar" aria-hidden="true"
+                ><svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="7.5" r="3.1" />
+                  <path
+                    d="M5.2 20.2c.4-4.1 2.8-6.6 6.8-6.6s6.4 2.5 6.8 6.6Z"
+                  /></svg
+              ></span>
+              <div>
+                <strong>Администратор ZUB</strong
+                ><span>Обычно отвечаем в течение 10 минут</span>
+              </div>
+            </div>
+            <div class="chat-messages" id="chat-messages" aria-live="polite">
+              <div class="chat-message">
+                Здравствуйте! Поможем выбрать услугу, врача или время приёма.
+              </div>
+            </div>
+            <form class="chat-form" id="chat-form">
+              <input
+                id="chat-input"
+                type="text"
+                placeholder="Напишите вопрос"
+                autocomplete="off"
+              />
+              <button type="submit">Отправить</button>
+            </form>
+          </div>
+        </section>
+        <section class="section" id="help">
+          <div class="section-head"><h2>Частые вопросы</h2></div>
+          <div class="faq">
+            <details>
+              <summary>Можно ли отменить запись?</summary>
+              <p>
+                Да, откройте раздел «Мои записи» прямо здесь и нажмите кнопку
+                отмены.
+              </p>
+            </details>
+            <details>
+              <summary>Как перенести визит?</summary>
+              <p>
+                Откройте «Мои записи», нажмите «Перенести» и выберите новое
+                время.
+              </p>
+            </details>
+            <details>
+              <summary>Что взять с собой?</summary>
+              <p>
+                Только хорошее настроение. Мы бережно проведём консультацию и
+                всё объясним.
+              </p>
+            </details>
+          </div>
+        </section>
+      </div>
+    </main>
+    <div class="reschedule-modal" id="reschedule-modal" hidden>
+      <div
+        class="reschedule-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reschedule-title"
+      >
+        <div class="reschedule-head">
+          <div>
+            <h3 id="reschedule-title">Перенести визит</h3>
+            <p id="reschedule-summary">Выберите новый день и время</p>
+          </div>
+          <button
+            class="reschedule-close"
+            id="reschedule-close"
+            aria-label="Закрыть"
+          >
+            ×
+          </button>
+        </div>
+        <label class="reschedule-label">Новый день</label>
+        <div class="reschedule-date-grid" id="reschedule-date-list"></div>
+        <label class="reschedule-label">Новое время</label>
+        <div class="reschedule-time-grid" id="reschedule-time-list"></div>
+        <div class="reschedule-actions">
+          <button id="reschedule-cancel">Оставить как есть</button>
+          <button id="reschedule-confirm" disabled>Сохранить перенос</button>
+        </div>
+      </div>
+    </div>
+    <div class="confirm-modal" id="confirm-modal" hidden>
+      <div
+        class="confirm-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirm-title"
+      >
+        <h3 id="confirm-title">Подтвердите действие</h3>
+        <p id="confirm-message"></p>
+        <div class="confirm-actions">
+          <button id="confirm-no" type="button">Оставить</button>
+          <button id="confirm-yes" type="button">Подтвердить</button>
+        </div>
+      </div>
+    </div>
+    <nav>
+      <div class="nav-inner">
+        <button data-target="home" aria-current="page">
+          <svg viewBox="0 0 24 24">
+            <path d="m4 10 8-7 8 7v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z" />
+            <path d="M9 21v-6h6v6" /></svg
+          >Главная</button
+        ><button data-target="services">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 5h16v14H4z" />
+            <path d="M8 9h8M8 13h5" /></svg
+          >Услуги</button
+        ><button data-target="booking">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="5" width="16" height="15" rx="2" />
+            <path d="M8 3v4M16 3v4M4 10h16M8 14h3M8 17h5" /></svg
+          >Запись</button
+        ><button data-target="appointments">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" />
+            <path d="M9 8h6M9 12h6" /></svg
+          >Мои записи</button
+        ><button data-target="help">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path
+              d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"
+            /></svg
+          >Помощь
+        </button>
+      </div>
+    </nav>
+    <script>
+      const tg = window.Telegram && window.Telegram.WebApp;
+      try {
+        if (tg) {
+          tg.ready();
+          tg.expand();
+          tg.setHeaderColor("#f4fbfd");
+          tg.setBackgroundColor("#f4fbfd");
+        }
+      } catch {}
+      const doctors = [
+        {
+          id: "any",
+          name: "Любой врач",
+          specialty: "ближайшее время",
+          note: "подберем специалиста",
+          education: "Подберём специалиста под вашу задачу.",
+          review: "Пациенты ценят нас за спокойный и понятный подход.",
+        },
+        {
+          id: "anna",
+          name: "Анна Петрова",
+          specialty: "терапевт",
+          category: "therapist",
+          note: "8 лет опыта",
+          education:
+            "МГМСУ им. А. И. Евдокимова, стоматологический факультет. Повышение квалификации по эстетической реставрации.",
+          review:
+            "«Всё объяснила без сложных слов, приём прошёл очень спокойно».",
+          reviews: [
+            "«Всё объяснила без сложных слов, приём прошёл очень спокойно».",
+            "«Понравилось, что врач предложила несколько вариантов лечения».",
+            "«Очень бережно провела лечение, теперь не боюсь возвращаться».",
+          ],
+        },
+        {
+          id: "maxim",
+          name: "Максим Орлов",
+          specialty: "ортодонт",
+          category: "orthodontist",
+          note: "10 лет опыта",
+          education:
+            "Первый МГМУ им. И. М. Сеченова. Ординатура по ортодонтии, работа с элайнерами и брекет-системами.",
+          review: "«Наконец-то поняла, какой план лечения мне подходит».",
+          reviews: [
+            "«Наконец-то поняла, какой план лечения мне подходит».",
+            "«На консультации разобрали все этапы и сроки».",
+          ],
+        },
+        {
+          id: "elena",
+          name: "Елена Смирнова",
+          specialty: "терапевт",
+          category: "therapist",
+          note: "6 лет опыта",
+          education:
+            "РНИМУ им. Н. И. Пирогова. Специализация по лечению кариеса и работе с микроскопом.",
+          review: "«Очень внимательный врач, ничего не навязывает».",
+          reviews: ["«Очень внимательный врач, ничего не навязывает»."],
+        },
+        {
+          id: "kirill",
+          name: "Кирилл Волков",
+          specialty: "хирург-имплантолог",
+          category: "surgeon",
+          note: "12 лет опыта",
+          education:
+            "СПбГУ, челюстно-лицевая хирургия. Имплантация и сложные удаления.",
+          review: "«Операция прошла быстрее и легче, чем я ожидала».",
+          reviews: [
+            "«Операция прошла быстрее и легче, чем я ожидала».",
+            "«Получила подробные рекомендации и поддержку после процедуры».",
+            "«Врач подробно ответил на все вопросы до и после удаления».",
+          ],
+        },
+        {
+          id: "sofia",
+          name: "Софья Белова",
+          specialty: "детский стоматолог",
+          category: "pediatric",
+          note: "7 лет опыта",
+          education:
+            "Казанский ГМУ. Детская стоматология и мягкая адаптация маленьких пациентов.",
+          review: "«Ребёнок впервые вышел от стоматолога без слёз».",
+          reviews: [
+            "«Ребёнок впервые вышел от стоматолога без слёз».",
+            "«Доктор всё объясняла ребёнку спокойно и понятно».",
+          ],
+        },
+        {
+          id: "irina",
+          name: "Ирина Власова",
+          specialty: "терапевт",
+          category: "therapist",
+          note: "9 лет опыта",
+          education:
+            "МГМСУ им. А. И. Евдокимова. Эстетическая реставрация и лечение под микроскопом.",
+          reviews: [
+            "«Очень аккуратная работа и подробные объяснения».",
+            "«Пришла на консультацию, получила понятный план лечения».",
+            "«Результат реставрации выглядит естественно».",
+            "«На каждом этапе было спокойно и понятно».",
+          ],
+        },
+        {
+          id: "dmitry",
+          name: "Дмитрий Соколов",
+          specialty: "ортодонт",
+          category: "orthodontist",
+          note: "11 лет опыта",
+          education:
+            "РНИМУ им. Н. И. Пирогова. Брекет-системы и лечение на элайнерах.",
+          reviews: [
+            "«Внимательно разобрал снимки и предложил несколько вариантов».",
+            "«Результат заметен уже через несколько месяцев».",
+          ],
+        },
+        {
+          id: "natalia",
+          name: "Наталья Романова",
+          specialty: "стоматолог-хирург",
+          category: "surgeon",
+          note: "14 лет опыта",
+          education:
+            "Первый МГМУ им. И. М. Сеченова. Удаление зубов и хирургическая подготовка к имплантации.",
+          reviews: [
+            "«Всё прошло спокойно, врач постоянно была на связи».",
+            "«Очень бережное отношение и чёткие рекомендации».",
+            "«После процедуры быстро ответили на мой вопрос».",
+          ],
+        },
+        {
+          id: "olga",
+          name: "Ольга Крылова",
+          specialty: "детский стоматолог",
+          category: "pediatric",
+          note: "8 лет опыта",
+          education:
+            "Казанский ГМУ. Детская терапия и адаптация детей к лечению.",
+          reviews: ["«Сын сам спросил, когда можно прийти ещё раз»."],
+        },
+      ];
+      const services = {
+        consult: "Консультация",
+        clean: "Профессиональная чистка",
+        caries: "Лечение кариеса",
+        orthodontics: "Ортодонтия",
+        implantation: "Имплантация",
+        pediatric: "Детская стоматология",
+        whitening: "Отбеливание",
+      };
+      const catalogApiUrl =
+        ["localhost", "127.0.0.1"].includes(window.location.hostname) &&
+        window.location.port === "3001"
+          ? "/api/services"
+          : null;
+
+      async function loadServices() {
+        const container = document.querySelector("#services .services");
+        const status = document.getElementById("services-status");
+        const templates = [...container.querySelectorAll("[data-service]")];
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 8000);
+
+        status.hidden = false;
+        status.textContent = "Загружаем услуги…";
+        container.setAttribute("aria-busy", "true");
+        templates.forEach((button) => { button.disabled = true; });
+
+        try {
+          const response = await fetch(catalogApiUrl, {
+            signal: controller.signal,
+            cache: "no-store",
+          });
+          if (!response.ok) throw new Error("Не удалось получить услуги");
+          const data = await response.json();
+          if (
+            !Array.isArray(data.services) ||
+            !data.services.every((service) =>
+              service &&
+              typeof service.id === "string" &&
+              /^[a-z][a-z0-9_-]*$/.test(service.id) &&
+              typeof service.title === "string" &&
+              service.title.trim().length > 0 &&
+              Number.isInteger(service.minutes) && service.minutes > 0 &&
+              Number.isFinite(service.price) && service.price >= 0,
+            ) ||
+            new Set(data.services.map((service) => service.id)).size !== data.services.length
+          ) {
+            throw new Error("Некорректный список услуг");
+          }
+
+          const cards = data.services.map((service) => {
+            services[service.id] = service.title;
+            const template = templates.find((button) => button.dataset.service === service.id);
+            const card = (template || templates[0]).cloneNode(true);
+            card.disabled = false;
+            card.dataset.service = service.id;
+            card.querySelector(".service-title").textContent = service.title;
+            card.querySelector(".service-note").textContent = `${service.minutes} мин`;
+            card.querySelector(".service-price").textContent =
+              `от ${service.price.toLocaleString("ru-RU")} ₽`;
+            return card;
+          });
+          container.replaceChildren(...cards);
+          status.textContent = "Услуги пока недоступны. Попробуйте позже.";
+          status.hidden = cards.length > 0;
+        } catch (error) {
+          status.textContent = "Не удалось загрузить услуги. Обновите страницу, чтобы попробовать снова.";
+          console.error("[Услуги]", error.message);
+        } finally {
+          clearTimeout(timeout);
+          container.removeAttribute("aria-busy");
+        }
+      }
+      const state = {
+        service: "consult",
+        doctor: "any",
+        doctorCategory: "all",
+        date: 0,
+        time: "",
+        editingId: null,
+        reschedulingId: null,
+        rescheduleDate: 0,
+        rescheduleTime: "",
+      };
+      const doctorList = document.getElementById("doctor-list");
+      const doctorInfo = document.getElementById("doctor-info");
+      const dateList = document.getElementById("date-list");
+      const timeList = document.getElementById("time-list");
+      const note = document.getElementById("booking-note");
+      const confirm = document.getElementById("confirm-booking");
+      const rescheduleModal = document.getElementById("reschedule-modal");
+      const rescheduleSummary = document.getElementById("reschedule-summary");
+      const rescheduleDateList = document.getElementById(
+        "reschedule-date-list",
+      );
+      const rescheduleTimeList = document.getElementById(
+        "reschedule-time-list",
+      );
+      const rescheduleConfirm = document.getElementById("reschedule-confirm");
+      const confirmModal = document.getElementById("confirm-modal");
+      const confirmMessage = document.getElementById("confirm-message");
+      const confirmYes = document.getElementById("confirm-yes");
+      const confirmNo = document.getElementById("confirm-no");
+      let pendingConfirmation = null;
+      const dateFormatter = new Intl.DateTimeFormat("ru-RU", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+      });
+      const timeSlots = [
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "13:30",
+        "14:00",
+        "14:30",
+        "15:30",
+        "16:00",
+        "17:00",
+        "18:00",
+      ];
+      const dates = Array.from({ length: 5 }, (_, index) => {
+        const date = new Date();
+        date.setDate(date.getDate() + index + 1);
+        return date;
+      });
+      const select = (key, value) => {
+        state[key] = value;
+        renderBooking();
+      };
+      function renderBooking() {
+        const visibleDoctors =
+          state.doctorCategory === "all"
+            ? doctors
+            : doctors.filter(
+                (doctor) => doctor.category === state.doctorCategory,
+              );
+        if (!visibleDoctors.some((doctor) => doctor.id === state.doctor)) {
+          state.doctor = visibleDoctors[0]?.id || "any";
+        }
+        document.querySelectorAll(".doctor-filter").forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.category === state.doctorCategory),
+          );
+        });
+        doctorList.innerHTML = visibleDoctors
+          .map(
+            (doctor) =>
+              `<button class="choice" aria-pressed="${state.doctor === doctor.id}" data-doctor="${doctor.id}">${doctor.name}<em>${doctor.specialty}</em><small>${doctor.note}</small></button>`,
+          )
+          .join("");
+        const selectedDoctor =
+          doctors.find((doctor) => doctor.id === state.doctor) || doctors[0];
+        const reviews = selectedDoctor.reviews || [selectedDoctor.review];
+        const reviewsMarkup = reviews
+          .filter(Boolean)
+          .map((review) => `<p><b>Отзыв:</b> ${review}</p>`)
+          .join("");
+        doctorInfo.innerHTML = `<div class="doctor-info"><strong>${selectedDoctor.name} · ${selectedDoctor.specialty}</strong><p>${selectedDoctor.note}</p><details><summary>Образование и отзывы (${reviews.length})</summary><p><b>Образование:</b> ${selectedDoctor.education}</p>${reviewsMarkup}</details></div>`;
+        dateList.innerHTML = dates
+          .map((date, index) => {
+            const parts = dateFormatter.formatToParts(date);
+            const weekday =
+              parts.find((part) => part.type === "weekday")?.value || "";
+            const day = parts.find((part) => part.type === "day")?.value || "";
+            return `<button class="date-choice" aria-pressed="${state.date === index}" data-date="${index}"><b>${weekday}</b><span>${day} ${date.toLocaleDateString("ru-RU", { month: "short" }).replace(".", "")}</span></button>`;
+          })
+          .join("");
+        timeList.innerHTML = timeSlots
+          .map(
+            (time) =>
+              `<button class="time-choice" aria-pressed="${state.time === time}" data-time="${time}">${time}</button>`,
+          )
+          .join("");
+        doctorList
+          .querySelectorAll("[data-doctor]")
+          .forEach((button) =>
+            button.addEventListener("click", () =>
+              select("doctor", button.dataset.doctor),
+            ),
+          );
+        document.querySelectorAll(".doctor-filter").forEach((button) =>
+          button.addEventListener("click", () => {
+            state.doctorCategory = button.dataset.category;
+            renderBooking();
+          }),
+        );
+        dateList
+          .querySelectorAll("[data-date]")
+          .forEach((button) =>
+            button.addEventListener("click", () =>
+              select("date", Number(button.dataset.date)),
+            ),
+          );
+        timeList
+          .querySelectorAll("[data-time]")
+          .forEach((button) =>
+            button.addEventListener("click", () =>
+              select("time", button.dataset.time),
+            ),
+          );
+        confirm.disabled = !state.time;
+        confirm.textContent = state.editingId
+          ? "Сохранить новое время"
+          : "Подтвердить запись";
+        note.textContent = state.time
+          ? `${services[state.service]} · ${doctors.find((doctor) => doctor.id === state.doctor)?.name} · ${state.time}`
+          : "Выберите врача и время приёма.";
+        renderAppointments();
+      }
+      function renderReschedule() {
+        rescheduleDateList.innerHTML = dates
+          .map((date, index) => {
+            const parts = dateFormatter.formatToParts(date);
+            const weekday =
+              parts.find((part) => part.type === "weekday")?.value || "";
+            const day = parts.find((part) => part.type === "day")?.value || "";
+            return `<button class="date-choice" aria-pressed="${state.rescheduleDate === index}" data-reschedule-date="${index}"><b>${weekday}</b><span>${day} ${date.toLocaleDateString("ru-RU", { month: "short" }).replace(".", "")}</span></button>`;
+          })
+          .join("");
+        rescheduleTimeList.innerHTML = timeSlots
+          .map(
+            (time) =>
+              `<button class="time-choice" aria-pressed="${state.rescheduleTime === time}" data-reschedule-time="${time}">${time}</button>`,
+          )
+          .join("");
+        rescheduleDateList
+          .querySelectorAll("[data-reschedule-date]")
+          .forEach((button) =>
+            button.addEventListener("click", () => {
+              state.rescheduleDate = Number(button.dataset.rescheduleDate);
+              renderReschedule();
+            }),
+          );
+        rescheduleTimeList
+          .querySelectorAll("[data-reschedule-time]")
+          .forEach((button) =>
+            button.addEventListener("click", () => {
+              state.rescheduleTime = button.dataset.rescheduleTime;
+              renderReschedule();
+            }),
+          );
+        rescheduleConfirm.disabled = !state.rescheduleTime;
+      }
+      function openReschedule(id) {
+        const appointment = getAppointments().find(
+          (item) => String(item.id) === String(id),
+        );
+        if (!appointment) return;
+        state.reschedulingId = id;
+        state.rescheduleDate = Math.max(
+          0,
+          dates.findIndex(
+            (date) => date.toISOString().slice(0, 10) === appointment.date,
+          ),
+        );
+        state.rescheduleTime = appointment.time;
+        const doctor = doctors.find((item) => item.id === appointment.doctor);
+        rescheduleSummary.textContent = `${services[appointment.service]} · ${doctor?.name || "Врач"}`;
+        renderReschedule();
+        rescheduleModal.hidden = false;
+      }
+      function closeReschedule() {
+        rescheduleModal.hidden = true;
+        state.reschedulingId = null;
+        state.rescheduleTime = "";
+      }
+      const screenMap = {
+        home: "screen-home",
+        services: "screen-services",
+        booking: "screen-booking",
+        appointments: "screen-appointments",
+        help: "screen-help",
+      };
+      function showScreen(target) {
+        const screen = document.getElementById(screenMap[target]);
+        if (!screen) return;
+        document
+          .querySelectorAll(".screen")
+          .forEach((item) =>
+            item.classList.toggle("is-active", item === screen),
+          );
+        document.querySelectorAll("nav button").forEach((item) => {
+          if (item.dataset.target === target)
+            item.setAttribute("aria-current", "page");
+          else item.removeAttribute("aria-current");
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      document.querySelector("#services .services").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-service]");
+        if (!button || button.disabled) return;
+        state.service = button.dataset.service;
+        renderBooking();
+        showScreen("booking");
+      });
+      document
+        .querySelectorAll('[data-action="book"]')
+        .forEach((button) =>
+          button.addEventListener("click", () => showScreen("booking")),
+        );
+      document
+        .querySelectorAll("[data-scroll]")
+        .forEach((button) =>
+          button.addEventListener("click", () =>
+            showScreen(button.dataset.scroll),
+          ),
+        );
+      function getAppointments() {
+        try {
+          return JSON.parse(
+            localStorage.getItem("zub-demo-appointments") || "[]",
+          );
+        } catch {
+          return [];
+        }
+      }
+      function saveAppointments(appointments) {
+        localStorage.setItem(
+          "zub-demo-appointments",
+          JSON.stringify(appointments),
+        );
+      }
+      function askConfirmation(message, onConfirm) {
+        pendingConfirmation = onConfirm;
+        confirmMessage.textContent = message;
+        confirmModal.hidden = false;
+      }
+      function closeConfirmation() {
+        confirmModal.hidden = true;
+        pendingConfirmation = null;
+      }
+      confirmNo.addEventListener("click", closeConfirmation);
+      confirmYes.addEventListener("click", () => {
+        const action = pendingConfirmation;
+        closeConfirmation();
+        if (action) action();
+      });
+      function displayDate(date) {
+        return new Intl.DateTimeFormat("ru-RU", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+        }).format(new Date(date));
+      }
+      function renderAppointments() {
+        const list = document.getElementById("appointment-list");
+        const appointments = getAppointments();
+        list.innerHTML = appointments.length
+          ? appointments
+              .map((appointment) => {
+                const doctor = doctors.find(
+                  (item) => item.id === appointment.doctor,
+                );
+                return `<article class="appointment"><strong>${services[appointment.service]}</strong><p>${displayDate(appointment.date)} · ${appointment.time}<br>${doctor?.name || "Врач не выбран"} · ${doctor?.specialty || ""}</p><div class="appointment-actions"><button data-reschedule="${appointment.id}">Перенести</button><button data-cancel="${appointment.id}">Отменить</button></div></article>`;
+              })
+              .join("")
+          : '<div class="empty-appointments">Здесь появятся ваши записи. Выберите услугу выше, чтобы создать первую.</div>';
+        list.onclick = (event) => {
+          const rescheduleButton = event.target.closest("[data-reschedule]");
+          const cancelButton = event.target.closest("[data-cancel]");
+          if (rescheduleButton) {
+            event.preventDefault();
+            event.stopPropagation();
+            openReschedule(rescheduleButton.dataset.reschedule);
+            return;
+          }
+          if (cancelButton) {
+            event.preventDefault();
+            event.stopPropagation();
+            const appointmentId = cancelButton.dataset.cancel;
+            askConfirmation(
+              "Вы уверены, что хотите отменить эту запись?",
+              () => {
+                saveAppointments(
+                  getAppointments().filter(
+                    (item) => String(item.id) !== String(appointmentId),
+                  ),
+                );
+                renderAppointments();
+              },
+            );
+          }
+        };
+      }
+      const chatForm = document.getElementById("chat-form");
+      const chatInput = document.getElementById("chat-input");
+      const chatMessages = document.getElementById("chat-messages");
+      chatForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const message = chatInput.value.trim();
+        if (!message) return;
+        chatMessages.insertAdjacentHTML(
+          "beforeend",
+          `<div class="chat-message is-user"></div>`,
+        );
+        chatMessages.lastElementChild.textContent = message;
+        chatInput.value = "";
+        chatMessages.insertAdjacentHTML(
+          "beforeend",
+          `<div class="chat-message">Спасибо! Администратор ответит в рабочее время. Пока можно выбрать услугу и свободное время в разделе «Запись».</div>`,
+        );
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
+      confirm.addEventListener("click", () => {
+        if (!state.time) return;
+        const appointments = getAppointments();
+        const appointment = {
+          id: state.editingId || String(Date.now()),
+          service: state.service,
+          doctor: state.doctor,
+          date: dates[state.date].toISOString().slice(0, 10),
+          time: state.time,
+        };
+        saveAppointments(
+          state.editingId
+            ? appointments.map((item) =>
+                item.id === state.editingId ? appointment : item,
+              )
+            : [...appointments, appointment],
+        );
+        state.editingId = null;
+        note.textContent =
+          "Запись сохранена в демо-режиме. Её можно перенести в разделе «Мои записи».";
+        state.time = "";
+        renderBooking();
+        showScreen("appointments");
+      });
+      document
+        .getElementById("reschedule-close")
+        .addEventListener("click", closeReschedule);
+      document
+        .getElementById("reschedule-cancel")
+        .addEventListener("click", closeReschedule);
+      rescheduleConfirm.addEventListener("click", () => {
+        if (!state.reschedulingId || !state.rescheduleTime) return;
+        askConfirmation("Сохранить новую дату и время визита?", () => {
+          saveAppointments(
+            getAppointments().map((appointment) =>
+              appointment.id === state.reschedulingId
+                ? {
+                    ...appointment,
+                    date: dates[state.rescheduleDate]
+                      .toISOString()
+                      .slice(0, 10),
+                    time: state.rescheduleTime,
+                  }
+                : appointment,
+            ),
+          );
+          closeReschedule();
+          renderAppointments();
+        });
+      });
+      function updateClinicStatus() {
+        const now = new Date();
+        const moscow = new Intl.DateTimeFormat("en-US", {
+          timeZone: "Europe/Moscow",
+          weekday: "short",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: false,
+        })
+          .formatToParts(now)
+          .reduce((result, part) => {
+            result[part.type] = part.value;
+            return result;
+          }, {});
+        const hour = Number(moscow.hour);
+        const isSunday = moscow.weekday === "Sun";
+        const open = !isSunday && hour >= 10 && hour < 19;
+        const nextOpening =
+          isSunday || (moscow.weekday === "Sat" && hour >= 19)
+            ? "в понедельник в 10:00"
+            : "завтра в 10:00";
+        const status = document.querySelector("#clinic-status span");
+        const indicator = document.querySelector("#clinic-status");
+        status.textContent = open
+          ? "Открыты до 19:00"
+          : hour < 10 && !isSunday
+            ? "Откроемся в 10:00"
+            : `Закрыты · откроемся ${nextOpening}`;
+        indicator.classList.toggle("closed", !open);
+        indicator.style.background = open ? "#e5f7f3" : "#fff0ef";
+        indicator.style.color = open ? "#238c78" : "#c85c63";
+      }
+      updateClinicStatus();
+      setInterval(updateClinicStatus, 60000);
+      renderBooking();
+      const requestedScreen = new URLSearchParams(window.location.search).get("screen");
+      showScreen(screenMap[requestedScreen] ? requestedScreen : "home");
+      if (catalogApiUrl) loadServices();
+      document
+        .querySelectorAll("nav button")
+        .forEach((button) =>
+          button.addEventListener("click", () =>
+            showScreen(button.dataset.target),
+          ),
+        );
+    </script>
+  </body>
+</html>
